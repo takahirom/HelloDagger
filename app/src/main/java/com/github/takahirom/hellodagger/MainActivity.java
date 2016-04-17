@@ -19,8 +19,11 @@ public class MainActivity extends AppCompatActivity {
     @Singleton
     @Component
     public interface InterfaceInject {
-        InjectedClass injectClass();
+        void inject(MainActivity activity);
     }
+
+    @Inject
+    InjectedClass injectedClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DaggerMainActivity_InterfaceInject.builder().build().print();
+        DaggerMainActivity_InterfaceInject.builder().build().inject(this);
+
+        injectedClass.print();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
